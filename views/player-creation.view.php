@@ -12,7 +12,8 @@
         <label for="archertype">Archetype du joueur</label>
         <select name="archetype" id="archetype">
             <option value="warrior">Guerrier</option>
-            <!-- Add other  -->
+            <option value="priest">Prêtre</option>
+            <option value="mage">Mage</option>
         </select>
     </div>
 

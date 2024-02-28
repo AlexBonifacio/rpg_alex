@@ -12,6 +12,11 @@ abstract class Player extends Entity{
     // if > 1 -> buff or in[0;1] debuff
     protected float $buff;
 
+    public int $damageDealt = 1;
+
+    
+
+
     public function __construct($name)
     {
         parent::__construct();
@@ -19,10 +24,14 @@ abstract class Player extends Entity{
         $this->buff = 1.0;
     }
 
-    public function attack(Entity $target): void{
-        $damage = 10 * $this->level * $this->buff;
+    public function attack(Entity $target): int{
+        $damage = round(1 * rand(5,13) * $this->level * $this->buff);
         $target->takeDamage($damage);
+        return $damage;
     }
+
+
+
 
     public function heal():void{
         $heal = 10 * $this->level * $this->buff;

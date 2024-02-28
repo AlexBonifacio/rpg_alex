@@ -4,7 +4,16 @@ namespace Rpg\Models;
 
 use Rpg\Models\Entity;
 
-class Enemy extends Entity
+abstract class Enemy extends Entity
 {
-    // Crer methode abtraite getEnemyType() qui sera à redef dans les enfants pour donner le bon type
+
+    protected float $buff_enemy = 1.0;
+
+    public abstract function getEnemyType(): string;
+
+
+    public function attack(Entity $target): void{
+        $damage = 1 * rand(4,12) * $this->level * $this->buff_enemy;
+        $target->takeDamage($damage);
+    }
 }

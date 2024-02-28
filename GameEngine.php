@@ -4,6 +4,8 @@ namespace Rpg;
 
 // Appel de la class Warrior
 use Rpg\Models\Archetypes\Warrior;
+use Rpg\Models\Archetypes\Mage;
+use Rpg\Models\Archetypes\Priest;
 use Rpg\Models\Combat;
 use Rpg\Models\Enemy;
 use Rpg\Models\Player;
@@ -45,7 +47,11 @@ class GameEngine {
     private function createPlayer(array $formData) : void {
         if($formData["archetype"] == "warrior"){
             $this->player = new Warrior($formData["player-name"]);
-        }
+        } else if($formData["archetype"] == "mage") {
+            $this->player = new Mage($formData["player-name"]);
+        } else if($formData["archetype"] == "priest") {
+            $this->player = new Priest($formData["player-name"]);
+        };
         // add other archetypes
         $this->storage->save('player', $this->player);
         $this->logAction("Personnage créé : " . $this->player->name);
@@ -68,6 +74,11 @@ class GameEngine {
             $this->is_in_combat = false;
             $this->player->levelUp();
         }
+       
+        $damageDetails = $this->combat->turn($formData["action"]);
+        $this->logAction("Le joueur " . $this->player->name . " inflige " . $damageDetails['playerDamage'] . " dégâts.");
+        $this->logAction("L'ennemi inflige " . $damageDetails['enemyDamage'] . " dégâts.");
+
         $this->storage->save('combat', $this->combat);
     }
 
@@ -107,7 +118,7 @@ class GameEngine {
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $this->handleForm($_POST);
         } else {
-            $this->logAction(serialize($this->is_in_combat));
+            // $this->logAction(serialize($this->is_in_combat));
             // Choix du template d'affichage selon l'état du jeu
             if($this->is_in_combat){
                 require 'views/combat.view.php';

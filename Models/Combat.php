@@ -5,8 +5,11 @@ namespace Rpg\Models;
 use Rpg\Models\EnemyTypes\Boss;
 use Rpg\Models\EnemyTypes\Goblin;
 
+
 class Combat
 {
+
+
 
     public Player $player;
     public Enemy $enemy;
@@ -26,9 +29,14 @@ class Combat
         }
     }
 
-    public function turn(string $action): void{
+
+
+
+    
+
+    public function turn(string $action): array{
         if($action == "attack") {
-            $this->player->attack($this->enemy);
+            $damage = $this->player->attack($this->enemy);
         }else if($action == "heal"){
             $this->player->heal();
         }else if($action == "special"){
@@ -37,7 +45,8 @@ class Combat
             throw new \Exception("Pas d'action valide");
         }
 
-        //$this->enemy->attack($this->player);
+       
+        $enemyDamage = $this->enemy->attack($this->player);
 
         //if($this->turn % 3 == 0){
             // Reset facteurs à implementer dans class Player (reset des buff)
@@ -50,6 +59,9 @@ class Combat
         }else{
             $this->turn++;
         }
+
+        return ['playerDamage' => $damage, 'enemyDamage' => $enemyDamage];
+
 
     }
 

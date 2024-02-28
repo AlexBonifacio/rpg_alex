@@ -1,6 +1,5 @@
 <p class="lead">
-    <?= $this->player->name ?>, c'est ici que tout commence...
-    La classe de mon joueur est : <?= $this->player->getArchetype() ?>
+    C'est ici que tout commence <strong><?= $this->player->name ?></strong>, la classe <?= $this->player->getArchetype() ?> est un choix judicieux pour aller au bout de cette aventure.
 </p>
 
 <form method="post">

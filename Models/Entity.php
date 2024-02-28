@@ -11,7 +11,7 @@ abstract class Entity
     private int $max_life_points;
 
     // Global life points accesible partout via la class entity
-    public const int REFERENCE_LIFE_POINTS = 100;
+    public const REFERENCE_LIFE_POINTS = 100;
 
     public function __construct(int $level = 1)
     {
